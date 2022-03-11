@@ -72,6 +72,7 @@ class Hotel(Resource):
     def load_novo(hotel_id):
         dados = Hotel.arqumentos.parse_args()
         novo_hotel = HotelModel(hotel_id, **dados)
+        
         return novo_hotel; 
     
     def get(self, hotel_id):
@@ -81,13 +82,15 @@ class Hotel(Resource):
         return {'message': 'Hotel not found'}, 404
     
     def post(self, hotel_id):       
-        novo_hotel = Hotel.load_novo(hotel_id)        
+        hotel_objeto = Hotel.load_novo(hotel_id)   
+        novo_hotel = hotel_objeto.json()     
         hoteis.append(novo_hotel)        
         return novo_hotel, 201
     
     def put(self, hotel_id):
         hotel = Hotel.find_hotel(hotel_id)
-        novo_hotel = Hotel.load_novo(hotel_id)
+        hotel_objeto = Hotel.load_novo(hotel_id)   
+        novo_hotel = hotel_objeto.json()     
         if hotel:           
             hotel.update(novo_hotel)
             return hotel, 200
